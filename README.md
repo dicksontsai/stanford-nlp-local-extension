@@ -13,7 +13,7 @@ highlighted sentence. Soon, there will be more features, such as counting all
 words by part of speech for a webpage. My ultimate goal is to help users study
 how other people write!
 
-![Extension demo](https://github.com/dicksontsai/stanford-nlp-local-demo/raw/master/extension-demo.gif)
+![Extension demo](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-demo.gif)
 
 ## Working with Webpack
 
