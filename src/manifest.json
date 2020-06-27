@@ -1,0 +1,29 @@
+{
+  "name": "Stanford NLP Local",
+  "version": "1.0",
+  "description": "Send content to a local server running Stanford NLP tools.",
+  "homepage_url": "https://github.com/dicksontsai/stanford-nlp-local-extension",
+  "permissions": ["tabs", "contextMenus", "storage", "<all_urls>"],
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["background.bundle.js"]
+  },
+  "browser_action": {
+    "default_title": "Stanford NLP Local",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "img/icon16.png",
+      "32": "img/icon32.png",
+      "48": "img/icon48.png",
+      "128": "img/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "img/icon16.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
