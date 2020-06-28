@@ -1,4 +1,4 @@
-# Stanform NLP Local Extension
+# Stanford NLP Local Extension
 
 A Chrome extension that lets you study sentences on web pages using Stanford
 NLP tools.
@@ -12,6 +12,8 @@ This extension is currently limited to returning Penn parse trees and a map of
 POS (part of speech) to word counts.
 
 ![Extension demo](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-demo.gif)
+
+Below is a screenshot showing the contents more clearly.
 
 ![Extension screenshot](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-screenshot.png)
 
