@@ -15,7 +15,7 @@ function onParse(obj) {
     url: "http://localhost:8080/parser/parse",
     data: "sentence=" + obj.selectionText,
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
     }
   })
     .then(function(response) {
