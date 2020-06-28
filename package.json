@@ -14,6 +14,9 @@
     "start": "node utils/webserver.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.2",
     "css-loader": "^3.6.0",
@@ -28,6 +31,8 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

@@ -1,0 +1,4 @@
+.tree {
+  /* Render Penn trees with newlines. */
+  white-space: pre-wrap;
+}
