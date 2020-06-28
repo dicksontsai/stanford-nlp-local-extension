@@ -8,12 +8,15 @@ Stanford NLP jar files. You will need to set up the
 [Stanford Parser Server](https://github.com/dicksontsai/stanford_parser_server)
 and have it running locally.
 
-This extension is currently limited to returning a Penn parse tree for a
-highlighted sentence. Soon, there will be more features, such as counting all
-words by part of speech for a webpage. My ultimate goal is to help users study
-how other people write!
+This extension is currently limited to returning Penn parse trees and a map of
+POS (part of speech) to word counts.
 
 ![Extension demo](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-demo.gif)
+
+![Extension screenshot](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-screenshot.png)
+
+Soon, there will be more features, such as counting all words by part of speech
+for a webpage. My ultimate goal is to help users study how other people write!
 
 ## Working with Webpack
 
