@@ -34,7 +34,8 @@ var options = {
   entry: {
     popup: path.join(__dirname, "src", "js", "popup.js"),
     options: path.join(__dirname, "src", "js", "options.js"),
-    background: path.join(__dirname, "src", "js", "background.js")
+    background: path.join(__dirname, "src", "js", "background.js"),
+    parseWindow: path.join(__dirname, "src", "js", "Parse.jsx")
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -55,6 +56,11 @@ var options = {
       {
         test: /\.html$/,
         loader: "html-loader",
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(js|jsx)$/,
+        loader: "babel-loader",
         exclude: /node_modules/
       }
     ]
@@ -87,14 +93,6 @@ var options = {
           from: "src/img/*.png",
           to: "img",
           flatten: true
-        },
-        // Copy html files that aren't built with the HtmlWebpackPlugin.
-        {
-          from: "src/parse.html"
-        },
-        // Copy scripts for html files that aren't built with the HtmlWebpackPlugin.
-        {
-          from: "src/js/foreground/parse_output.js"
         }
       ]
     }),
@@ -107,6 +105,11 @@ var options = {
       template: path.join(__dirname, "src", "options.html"),
       filename: "options.html",
       chunks: ["options"]
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "src", "parse.html"),
+      filename: "parse.html",
+      chunks: ["parseWindow"]
     }),
     new WriteFilePlugin()
   ]
