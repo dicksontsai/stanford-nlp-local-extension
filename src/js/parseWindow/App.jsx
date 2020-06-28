@@ -14,7 +14,7 @@ function PosTable(props) {
   const sorted = Object.entries(poscount)
     .map(entry => [entry[0], countsToOrderedList(entry[1])])
     .sort((a, b) => {
-      a[0].localeCompare(b[0]);
+      return a[0].localeCompare(b[0]);
     });
   return (
     <table>
