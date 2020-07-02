@@ -1,0 +1,11 @@
+<ivy-module version="2.0">
+    <info organisation="com.dicksontsai" module="stanford-parser-server" />
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency org="javax.servlet" name="javax.servlet-api" rev="4.0.1" />
+        <!-- https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp -->
+        <dependency org="edu.stanford.nlp" name="stanford-corenlp" rev="4.0.0" />
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency org="org.json" name="json" rev="20200518" />
+    </dependencies>
+</ivy-module>
