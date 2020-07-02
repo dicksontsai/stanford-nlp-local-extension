@@ -23,6 +23,6 @@ and tree patterns by website/author that you can accumulate over time.
 
 [Stanford NLP](https://nlp.stanford.edu), for making their software available.
 
-The client repo is cloned from
+The client directory is cloned from
 [Chrome Extension Webpack Boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate)
 by [@samuelsimoes](https://twitter.com/samuelsimoes).
