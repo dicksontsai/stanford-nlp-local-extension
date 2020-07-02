@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+  <display-name>Stanford Parser Server</display-name>
+  <description>
+    Server to parse sentences using the Stanford Parser.
+  </description>
+
+  <servlet>
+    <servlet-name>parser</servlet-name>
+    <description>
+      This servlet parses sentences using the Stanford Parser.
+    </description>
+    <servlet-class>com.dicksontsai.parse.ParserServer</servlet-class>
+    <!-- Load this servlet at server startup time -->
+    <load-on-startup>5</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>parser</servlet-name>
+    <url-pattern>/parse</url-pattern>
+  </servlet-mapping>
+
+  <!-- Define the default session timeout for your application,
+         in minutes.  From a servlet or JSP page, you can modify
+         the timeout for a particular session dynamically by using
+         HttpSession.getMaxInactiveInterval(). -->
+
+  <session-config>
+    <session-timeout>30</session-timeout> <!-- 30 minutes -->
+  </session-config>
+
+</web-app>
