@@ -1,22 +1,31 @@
 # Stanford Parser Servlet
 
-A simple Java [servlet](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html)
+A simple Java
+[servlet](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html)
 that parses sentences based on Stanford NLP's parser. I use Java here, because
 Stanford CoreNLP is distributed as a `.jar` (Java archive) file.
 
-Below is one way of running this Java servlet through [Apache Tomcat](http://tomcat.apache.org/).
+A servlet is a "mini" HTTP server. A full HTTP server can be composed of many servlets.
+
+One way of running this Java servlet is by using
+[Apache Tomcat](http://tomcat.apache.org/). Setup instructions are below.
+Tomcat is a Java servlet container, an HTTP server that delegates to servlets
+installed on it.
 
 ## Setup
 
 ### Tomcat Setup
 
-_Tomcat is a Java servlet container. The instructions here are not specific to this repo._
-
-In this section, you will install and start a local Tomcat server to serve this servlet (default port is 8080).
+In this section, you will install and start a local Tomcat server to serve our
+Stanford Parser Servlet (default port is 8080).
 
 1. Download Tomcat from https://tomcat.apache.org/download-90.cgi
 1. Add `$CATALINA_HOME` to your `.bashrc`/`.zshrc` pointing to the downloaded directory.
-1. You may need to run `chmod +x $CATALINA_HOME/bin/*.sh` to execute those scripts.
+   ```
+   export CATALINA_HOME=/Users/YourName/apache-tomcat-9.0.36
+   ```
+1. Remember to re-run your dotfiles. An easy way is to create a new Terminal tab.
+1. Run `chmod +x $CATALINA_HOME/bin/*.sh` to allow the execution of Tomcat scripts.
 1. Add manager roles to Tomcat by editing `$CATALINA_HOME/conf/tomcat-users.xml`.
    ```
    <role rolename="tomcat"/>
@@ -27,7 +36,10 @@ In this section, you will install and start a local Tomcat server to serve this 
    ```
 1. Create a new `setenv.sh` file: `$CATALINA_HOME/bin/setenv.sh`.
 
-   1. Locate your JDK installation. I found my MacOS' JDK in `ls /Library/java/ -> /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home`.
+   1. Locate your JDK installation. I found my MacOS' JDK in
+      `ls /Library/java/ -> /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home`.
+      Install [OpenJDK](https://jdk.java.net/14/) if your computer does not have
+      a JDK installed.
    1. Add `JAVA_HOME` to `setenv.sh`:
       ```
       JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home
@@ -39,21 +51,34 @@ In this section, you will install and start a local Tomcat server to serve this 
 
 1. Download Apache Ant from https://ant.apache.org/bindownload.cgi
    1. Install and add to your path. You should now have `$ANT_HOME` defined.
-1. Download Apache Ivy and copy the Ivy jar to `$ANT_HOME/lib`.
-1. Copy the file "lib/catalina-ant.jar" from your Tomcat installation into the "lib" directory of your Ant installation.
-1. Create a "build.properties" file in your application's top-level
-   source directory (or your user login home directory) that defines
-   appropriate values for the "manager.password", "manager.url", and
-   "manager.username" properties described above. In our case:
-   1. manager.username: `tcs`
-   1. manager.password: `456`
-   1. manager.url: Can leave blank. Defaults to `localhost:8080`.
+   ```
+   export ANT_HOME=/Users/YourName/apache-ant-1.10.8
+   ```
+1. Download Apache Ivy from https://ant.apache.org/ivy/download.cgi and copy the
+   Ivy jar to `$ANT_HOME/lib`.
+1. Copy `$CATALINA_HOME/lib/catalina-ant.jar` to `$ANT_HOME/lib`.
+1. In this repo's `server` directory, `cp sample.build.properties build.properties`
+   and fill in the missing values.
+   ```
+   # catalina.home should match $CATALINA_HOME
+   catalina.home=/Users/YourName/apache-tomcat-9.0.36
+   manager.username=tcs
+   manager.password=456
+   # Populate manager.url if you don't want it to be localhost:8080.
+   ```
 
 ### Stanford NLP Setup
 
-The `ivy.xml` file should already take care of fetching Stanford NLP's CoreNLP library. However, you will also need
-to download the parse model separately. Download the English model at https://nlp.stanford.edu/software/stanford-corenlp-4.0.0-models-english.jar
-and copy it to the `lib` directory.
+The `ivy.xml` file should already take care of fetching Stanford NLP's CoreNLP
+library. However, you will also need to download the parse model separately.
+
+1. `mkdir lib` in this repo's `server` directory.
+1. Download the parser at https://nlp.stanford.edu/software/stanford-parser-4.0.0.zip
+1. Copy `stanford-parser-4.0.0-models.jar` to this repo's `server/lib`.
+
+Note: I do not know why the standalone models.jar
+(https://nlp.stanford.edu/software/stanford-corenlp-4.0.0-models-english.jar)
+does not work.
 
 ## Build the Servlet and Install to Tomcat
 
