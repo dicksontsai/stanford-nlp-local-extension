@@ -37,7 +37,7 @@ const posTagToNameMap = {
   WDT: "Wh-determiner",
   WP: "Wh-pronoun",
   WP$: "Possessive wh-pronoun",
-  WRB: "Wh-adverb"
+  WRB: "Wh-adverb",
 };
 
 function posTagToName(tag) {
@@ -60,12 +60,12 @@ function countsToOrderedList(counts) {
 function PosTable(props) {
   const { poscount } = props;
   const sorted = Object.entries(poscount)
-    .map(entry => [entry[0], countsToOrderedList(entry[1])])
+    .map((entry) => [entry[0], countsToOrderedList(entry[1])])
     .sort((a, b) => {
       return a[0].localeCompare(b[0]);
     });
   return (
-    <div>
+    <div className="pos-section">
       <h1>Word Choice by Part of Speech</h1>
       <table>
         <thead>
@@ -75,12 +75,12 @@ function PosTable(props) {
           </tr>
         </thead>
         <tbody>
-          {sorted.map(entry => (
+          {sorted.map((entry) => (
             <tr key={entry[0]}>
               <td>{displayPosTag(entry[0])}</td>
               <td>
                 <pre>
-                  {entry[1].map(wordCount => wordCount.join(": ")).join("\n")}
+                  {entry[1].map((wordCount) => wordCount.join(": ")).join("\n")}
                 </pre>
               </td>
             </tr>
@@ -93,7 +93,7 @@ function PosTable(props) {
 
 function TreesTable(props) {
   return (
-    <div>
+    <div className="trees-section">
       <h1>Parse Trees</h1>
       <table>
         <tbody>
@@ -101,6 +101,7 @@ function TreesTable(props) {
             return (
               <tr key={`tree-${i}`}>
                 <td>
+                  <div>{props.sentences[i]}</div>
                   <div className="tree">{tree.replace(/\\n/g, "\n")}</div>
                 </td>
               </tr>
@@ -115,11 +116,11 @@ function TreesTable(props) {
 // trees is an array of strings. Each string is a printed tree.
 // poscount is a JSON object mapping pos to word counts.
 export default function ParseWindow(props) {
-  const { trees, poscount } = props;
+  const { sentences, trees, poscount } = props;
   return (
-    <div>
+    <div className="container">
       <PosTable poscount={poscount} />
-      <TreesTable trees={trees} />
+      <TreesTable trees={trees} sentences={sentences} />
     </div>
   );
 }
