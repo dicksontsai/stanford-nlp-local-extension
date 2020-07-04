@@ -77,7 +77,13 @@ public class ParserServer extends HttpServlet {
         ParseAggregator agg = new ParseAggregator();
         for (List<HasWord> sentence : sentencer.process(rawWords)) {
             Tree parse = this.parser.parseSentence(sentence);
-            agg.addTree(parse);
+            StringBuilder sentenceStr = new StringBuilder();
+            for (HasWord word : sentence) {
+                if (word.word() != null) {
+                    sentenceStr.append(word.word() + " ");
+                }
+            }
+            agg.addTree(sentenceStr.toString(), parse);
         }
 
         response.setContentType("application/json");

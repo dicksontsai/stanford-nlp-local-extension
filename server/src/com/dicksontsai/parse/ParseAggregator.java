@@ -21,10 +21,12 @@ import edu.stanford.nlp.trees.Tree;
  * their counts).
  */
 public class ParseAggregator {
+    private List<String> sentences = new ArrayList<>();
     private List<String> trees = new ArrayList<>();
     private Map<String, Map<String, Integer>> posWordCounts = new HashMap<>();
 
-    public void addTree(Tree tree) {
+    public void addTree(String sentence, Tree tree) {
+        sentences.add(sentence);
         trees.add(tree.pennString());
         List<Tree> leaves = tree.getLeaves();
         for (Tree leaf : leaves) {
@@ -45,6 +47,7 @@ public class ParseAggregator {
 
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
+        json.put("sentences", new JSONArray(this.sentences));
         json.put("tree", new JSONArray(this.trees));
 
         Map<String, JSONObject> posWordCountsJSON = new HashMap<>();
