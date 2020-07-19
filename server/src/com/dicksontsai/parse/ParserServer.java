@@ -78,12 +78,20 @@ public class ParserServer extends HttpServlet {
         for (List<HasWord> sentence : sentencer.process(rawWords)) {
             Tree parse = this.parser.parseSentence(sentence);
             StringBuilder sentenceStr = new StringBuilder();
+            int length = 0;
             for (HasWord word : sentence) {
                 if (word.word() != null) {
                     sentenceStr.append(word.word() + " ");
+                    // Ignore punctuation when computing sentence length.
+                    for (char ch : word.word().toCharArray()) {
+                        if (Character.isLetter(ch)) {
+                            length++;
+                            break;
+                        }
+                    }
                 }
             }
-            agg.addTree(sentenceStr.toString(), parse);
+            agg.add(new Sentence(sentenceStr.toString(), parse, length));
         }
 
         response.setContentType("application/json");

@@ -4,10 +4,58 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.stanford.nlp.trees.Tree;
+
+class Sentence {
+    private String text;
+    private Tree tree;
+    private int length;
+
+    Sentence(String text, Tree tree, int length) {
+        this.text = text;
+        this.tree = tree;
+        this.length = length;
+    }
+
+    Tree getTree() {
+        return this.tree;
+    }
+
+    private static JSONObject treeToJSON(Tree tree) {
+        JSONObject json = new JSONObject();
+        json.put("v", tree.label());
+        ArrayList<JSONObject> children = new ArrayList<>();
+        for (Tree child : tree.children()) {
+            children.add(Sentence.treeToJSON(child));
+        }
+        json.put("c", new JSONArray(children));
+        return json;
+    }
+
+    /**
+     * 
+     * Current schema:
+     * 
+     * * sentence - text
+     * 
+     * * tree - parse tree
+     * 
+     * * length - length of sentence
+     */
+    JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        json.put("sentence", this.text);
+        json.put("tree", Sentence.treeToJSON(this.tree));
+        json.put("length", this.length);
+        return json;
+    }
+
+}
 
 /**
  * ParseAggregator aggregates metrics from parse trees that are fed
@@ -15,22 +63,20 @@ import edu.stanford.nlp.trees.Tree;
  * 
  * Current schema:
  * 
- * 1. "tree": list of parse trees strings.
+ * 1. "sentences": list of sentence objects.
  * 
  * 2. "poscount": map of part-of-speech (POS) to word counts (map of words to
  * their counts).
  */
 public class ParseAggregator {
-    private List<String> sentences = new ArrayList<>();
-    private List<String> trees = new ArrayList<>();
+    private List<Sentence> sentences = new ArrayList<>();
     private Map<String, Map<String, Integer>> posWordCounts = new HashMap<>();
 
-    public void addTree(String sentence, Tree tree) {
+    public void add(Sentence sentence) {
         sentences.add(sentence);
-        trees.add(tree.pennString());
-        List<Tree> leaves = tree.getLeaves();
+        List<Tree> leaves = sentence.getTree().getLeaves();
         for (Tree leaf : leaves) {
-            String pos = leaf.parent(tree).label().value();
+            String pos = leaf.parent(sentence.getTree()).label().value();
             String word = leaf.label().value().toLowerCase();
             Map<String, Integer> posWordCount = posWordCounts.get(pos);
             if (posWordCount == null) {
@@ -47,8 +93,8 @@ public class ParseAggregator {
 
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
-        json.put("sentences", new JSONArray(this.sentences));
-        json.put("tree", new JSONArray(this.trees));
+        List<JSONObject> sentenceJSON = this.sentences.stream().map(s -> s.toJSON()).collect(Collectors.toList());
+        json.put("sentences", new JSONArray(sentenceJSON));
 
         Map<String, JSONObject> posWordCountsJSON = new HashMap<>();
         for (Map.Entry<String, Map<String, Integer>> entry : posWordCounts.entrySet()) {
