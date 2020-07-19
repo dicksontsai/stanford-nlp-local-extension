@@ -1,4 +1,6 @@
 import React from "react";
+import Lengths from "./Lengths.jsx";
+import Tree from "./Tree.jsx";
 
 // Taken from https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 const posTagToNameMap = {
@@ -97,12 +99,12 @@ function TreesTable(props) {
       <h1>Parse Trees</h1>
       <table>
         <tbody>
-          {props.trees.map((tree, i) => {
+          {props.sentences.map((sentence, i) => {
             return (
               <tr key={`tree-${i}`}>
                 <td>
-                  <div>{props.sentences[i]}</div>
-                  <div className="tree">{tree.replace(/\\n/g, "\n")}</div>
+                  <div>{sentence.sentence}</div>
+                  <Tree tree={sentence.tree} />
                 </td>
               </tr>
             );
@@ -116,11 +118,14 @@ function TreesTable(props) {
 // trees is an array of strings. Each string is a printed tree.
 // poscount is a JSON object mapping pos to word counts.
 export default function ParseWindow(props) {
-  const { sentences, trees, poscount } = props;
+  const { sentences, poscount } = props;
   return (
     <div className="container">
-      <PosTable poscount={poscount} />
-      <TreesTable trees={trees} sentences={sentences} />
+      <div>
+        <PosTable poscount={poscount} />
+        <Lengths sentences={sentences} />
+      </div>
+      <TreesTable sentences={sentences} />
     </div>
   );
 }
