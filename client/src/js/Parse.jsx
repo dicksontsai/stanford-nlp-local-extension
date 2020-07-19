@@ -10,11 +10,7 @@ const inputStr = decodeURIComponent(window.location.search.substring(1));
 try {
   const input = JSON.parse(inputStr);
   render(
-    <ParseWindow
-      trees={input.tree}
-      poscount={input.poscount}
-      sentences={input.sentences}
-    />,
+    <ParseWindow poscount={input.poscount} sentences={input.sentences} />,
     window.document.getElementById("parse-root")
   );
 } catch (e) {
